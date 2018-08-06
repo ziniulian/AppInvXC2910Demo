@@ -23,10 +23,10 @@ public class Ma extends AppCompatActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_ma);
 
-		// 读写器设置
+		// 读写器初始化
 		w.initRd();
 
-		// 二维码设置
+		// 二维码初始化
 		w.initQr();
 
 		// 页面设置

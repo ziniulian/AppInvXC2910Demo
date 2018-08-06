@@ -103,7 +103,7 @@ public class Qrd extends BasQr {
 
 	@Override
 	public void open() {
-		if (!isConnected) {
+		if (!isConnected && sr != null) {
 			isScanning = false;
 			cb(EmQrCb.ShowProgress);
 			new Thread(connectRa).start();

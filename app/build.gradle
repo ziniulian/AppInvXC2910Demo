@@ -7,8 +7,8 @@ android {
         applicationId "tk.ziniulian.job.xc2910demo"
         minSdkVersion 17
         targetSdkVersion 24
-        versionCode 2
-        versionName "0.0.2"
+        versionCode 3
+        versionName "0.0.3"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -36,4 +36,5 @@ dependencies {
     compile files('libs/XC2910/rfid/invengo.irp1.jar')
     compile files('libs/XC2910/bar/invengo.dev.barcode.jar')
     compile files('libs/gson-2.8.2.jar')
+    compile files('libs/XC2910/bar/invengo.system.comm.jar')
 }
