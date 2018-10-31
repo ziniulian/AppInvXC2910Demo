@@ -1,11 +1,5 @@
 package tk.ziniulian.job.rfid.xc2910;
 
-import tk.ziniulian.job.rfid.Base;
-import tk.ziniulian.job.rfid.EmCb;
-import tk.ziniulian.job.rfid.EmPushMod;
-import tk.ziniulian.job.rfid.tag.T6C;
-import tk.ziniulian.util.Str;
-
 import invengo.javaapi.core.BaseReader;
 import invengo.javaapi.core.IMessage;
 import invengo.javaapi.core.IMessageNotification;
@@ -19,6 +13,12 @@ import invengo.javaapi.protocol.IRP1.Reader;
 import invengo.javaapi.protocol.IRP1.SysConfig_800;
 import invengo.javaapi.protocol.IRP1.WriteEpc;
 import invengo.javaapi.protocol.IRP1.WriteUserData_6C;
+import tk.ziniulian.job.rfid.Base;
+import tk.ziniulian.job.rfid.EmCb;
+import tk.ziniulian.job.rfid.EmPushMod;
+import tk.ziniulian.job.rfid.tag.T6C;
+import tk.ziniulian.job.rfid.tag.T6Ctemperature;
+import tk.ziniulian.util.Str;
 
 /**
  * XC2910型标签读写器
@@ -34,7 +34,7 @@ public class Rd extends Base implements IMessageNotificationReceivedHandle {
 	private ReadTag.ReadMemoryBank bank = ReadTag.ReadMemoryBank.EPC_TID_UserData_6C;
 	private final byte[] defaulPwd = new byte[] {0, 0, 0, 0};
 	private byte[] pwd = null;
-	private final Class tagc = T6C.class;
+	private Class tagc = T6C.class;
 
 	// 连接设备
 	private Runnable connectRa = new Runnable() {
@@ -152,10 +152,7 @@ public class Rd extends Base implements IMessageNotificationReceivedHandle {
 		if (bt == null) {
 			try {
 				bt = (T6C)tagc.newInstance();
-				bt.setEpc(ri.getEPC());
-				bt.setTid(ri.getTID());
-				bt.setUse(ri.getUserData());
-				bt.setBck(ri.getReserved());
+				bt.setByRXD_TagData_ReceivedInfo(ri);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -306,8 +303,16 @@ public class Rd extends Base implements IMessageNotificationReceivedHandle {
 			case "bck":
 				bank = ReadTag.ReadMemoryBank.EPC_TID_UserData_Reserved_6C_ID_UserData_6B;
 				break;
+			case "tmp":
+				bank = ReadTag.ReadMemoryBank.EPC_TID_TEMPERATURE;
+				break;
 			default:
 				return false;
+		}
+		if (bankNam.equals("tmp")) {
+			tagc = T6Ctemperature.class;
+		} else {
+			tagc = T6C.class;
 		}
 		return true;
 	}
@@ -323,6 +328,8 @@ public class Rd extends Base implements IMessageNotificationReceivedHandle {
 				return "use";
 			case EPC_TID_UserData_Reserved_6C_ID_UserData_6B:
 				return "bck";
+			case EPC_TID_TEMPERATURE:
+				return "tmp";
 			default:
 				return "";
 		}

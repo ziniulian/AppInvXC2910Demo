@@ -27,7 +27,7 @@ public class Ma extends AppCompatActivity {
 		w.initRd();
 
 		// 二维码初始化
-		w.initQr();
+//		w.initQr();
 
 		// 页面设置
 		wv = (WebView)findViewById(R.id.wv);
@@ -67,6 +67,7 @@ public class Ma extends AppCompatActivity {
 					if (e != null) {
 						switch (getCurUi()) {
 							case ScanTt:
+							case ScanTmpTt:
 								w.rfidScan();
 								break;
 							case QrTt:

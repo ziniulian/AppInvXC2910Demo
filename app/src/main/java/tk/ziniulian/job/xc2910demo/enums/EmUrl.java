@@ -12,6 +12,7 @@ public enum EmUrl {
 	RfWrtOk("javascript: rfid.hdWrt(true);"),
 	RfWrtErr("javascript: rfid.hdWrt(false);"),
 	ScanTt("file:///android_asset/testRFID/scanDemo.html"),
+	ScanTmpTt("file:///android_asset/testRFID/scanTemperatureDemo.html"),
 	WrtTt("file:///android_asset/testRFID/writeDemo.html"),
 
 	// 条码、二维码 测试

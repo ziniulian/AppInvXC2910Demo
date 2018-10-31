@@ -99,6 +99,11 @@ a {
     color: #AAA;
 }
 
+.tmp {
+	overflow: hidden;
+	text-align: right;
+}
+
 .op {
 	display: inline-block;
 	vertical-align: middle;

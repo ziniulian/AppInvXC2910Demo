@@ -1,5 +1,6 @@
 package tk.ziniulian.job.rfid.tag;
 
+import invengo.javaapi.protocol.IRP1.RXD_TagData;
 import tk.ziniulian.util.Str;
 
 /**
@@ -161,11 +162,7 @@ public class T6C {
 		return Str.Bytes2Hexstr(bck);
 	}
 
-	public String toJson(boolean isHex) {
-		StringBuilder sb = new StringBuilder();
-		sb.append("{\"tim\":");
-		sb.append(tim);
-		sb.append(',');
+	protected void hdJson (StringBuilder sb, boolean isHex) {
 		if (epc != null) {
 			sb.append("\"epc\":");
 			sb.append('\"');
@@ -206,6 +203,15 @@ public class T6C {
 			sb.append('\"');
 			sb.append(',');
 		}
+	}
+
+	public String toJson(boolean isHex) {
+		StringBuilder sb = new StringBuilder();
+		sb.append("{\"tim\":");
+		sb.append(tim);
+		sb.append(',');
+
+		hdJson(sb, isHex);
 
 		sb.deleteCharAt(sb.length() - 1);
 		sb.append('}');
@@ -218,6 +224,13 @@ public class T6C {
 
 	public void addOne () {
 		tim ++;
+	}
+
+	public void setByRXD_TagData_ReceivedInfo (RXD_TagData.ReceivedInfo ri) {
+		setEpc(ri.getEPC());
+		setTid(ri.getTID());
+		setUse(ri.getUserData());
+		setBck(ri.getReserved());
 	}
 
 }

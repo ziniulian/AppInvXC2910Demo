@@ -27,6 +27,9 @@ rfid = {
 	scanStop: function () {
 		rfdo.rfidStop();
 	},
+	setBank: function (b) {
+		rfdo.setBank(b);
+	},
 
 	// 写
 	wrt: function (bankNam, dat, tid) {

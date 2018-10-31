@@ -1,6 +1,5 @@
 function init() {
-	// dat.crtTag({ "epc": "aaa", "tim": 5, tid: "ttttt" });  // 测试
-	rfid.setBank("all");
+	rfid.setBank("tmp");
 }
 
 rfid.hdScan = function (arr) {
@@ -8,7 +7,9 @@ rfid.hdScan = function (arr) {
 	for (var i = 0; i < arr.length; i ++) {
 		o = dat.ts[arr[i].tid];
 		if (o) {
+			o.tmp = arr[i].tmp;
 			o.tim += arr[i].tim;
+			o.tmpDom.innerHTML = o.tmp;
 			o.timDom.innerHTML = o.tim;
 		} else {
 			dat.crtTag(arr[i]);
@@ -24,34 +25,28 @@ dat = {
 	crtTag: function (o) {
 		var r = {
 			dom: document.createElement("div"),
-			epcDom: document.createElement("div"),
+			tidDom: document.createElement("div"),
+			tmpDom: document.createElement("div"),
 			timDom: document.createElement("div"),
 			delDom: document.createElement("div"),
+			tmp: o.tmp,
 			tim: o.tim
 		};
 
 		var d = document.createElement("div");
 		d.className = "out";
-		r.epcDom.className = "txt mfs";
+		r.tidDom.className = "txt mfs";
+		r.tmpDom.className = "tmp sfs";
 		r.timDom.className = "tim sfs";
 		r.delDom.className = "op mfs";
-		d.appendChild(r.epcDom);
+		d.appendChild(r.tidDom);
+		d.appendChild(r.tmpDom);
 		d.appendChild(r.timDom);
-				// 可写入
-				var sub = d;
-				var url = "writeDemo.html?tid=";
-				url += o.tid;
-				url += "&epc=";
-				url += o.epc;
-				url += "&use=";
-				url += o.use;
-				d = document.createElement("a");
-				d.href = url;
-				d.appendChild(sub);
 		r.dom.appendChild(d);
 		r.dom.appendChild(r.delDom);
 
-		r.epcDom.innerHTML = o.tid;
+		r.tidDom.innerHTML = o.tid;
+		r.tmpDom.innerHTML = r.tmp;
 		r.timDom.innerHTML = r.tim;
 		r.delDom.innerHTML = "<a href=\"javascript:dat.delTag('" + o.tid + "');\">删除</a>";
 		tago.appendChild(r.dom);

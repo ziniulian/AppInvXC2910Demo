@@ -138,6 +138,11 @@ public class Web {
 		return rfd.catchScanning();
 	}
 
+	@JavascriptInterface
+	public boolean setBank(String bankNam) {
+		return rfd.setBank(bankNam);
+	}
+
 /*------------------- 二维码 ---------------------*/
 
 	@JavascriptInterface
